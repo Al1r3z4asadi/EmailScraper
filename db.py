@@ -1,4 +1,6 @@
-import mysql.connector  as mc 
+
+#imports
+import mysql.connector  as mc
 from mysql.connector import errorcode
 import os
 
@@ -13,13 +15,11 @@ def Create_connect_database(cursor , DB_NAME):
         exit(1)
 
 def main(*args , **kwargs):
-    
-
     TABLES = {}
-    # Name is a useless column just for test 
+    # Name is a useless column just for test
     table_Creation = '''Create Table emails(
             email varchar(128) NOT NULL ,
-            Name   varchar(14) NOT NULL ,  
+            Name   varchar(14) NOT NULL ,
             PRIMARY KEY (email)
     ) ENGINE=InnoDB '''
 
@@ -29,13 +29,14 @@ def main(*args , **kwargs):
     'password': os.environ.get("database_password"),
     'host': '127.0.0.1',
     }
+    # software test maybe  !
     DB_NAME = 'AzmoonNarm'
     cnx = mc.connect(**config)
     cursor = cnx.cursor(buffered=True)
     try:
         cursor.execute("USE {}".format(DB_NAME))
         cursor.execute('drop table if exists emails ;')
-        
+
     except mc.Error as err:
         # print("Database {} does not exists.".format(DB_NAME))
         if err.errno == errorcode.ER_BAD_DB_ERROR:
@@ -44,7 +45,7 @@ def main(*args , **kwargs):
             cnx.database = DB_NAME
         else:
             # print(err)
-        
+
             exit(1)
 
 
@@ -67,16 +68,16 @@ def main(*args , **kwargs):
         else:
             # print("OK")
             pass
-    
-    
+
+
     add_email = ("INSERT INTO emails "
                "(email , Name) "
                "VALUES (%s, %s)")
-    
+
     for mails in args[0]:
         cursor.execute(add_email, (mails ,'23'))
-        
-    
+
+
     cnx.commit()
 
     cursor.close()
