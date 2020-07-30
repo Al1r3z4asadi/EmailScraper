@@ -4,7 +4,7 @@ from urllib.parse import urlsplit
 from collections import deque
 from bs4 import BeautifulSoup
 import smtplib
-import db 
+import db
 import send_mail
 
 
@@ -26,7 +26,7 @@ url = input('please enter your url : ' )
 #     f.write(str(soup.prettify()))
 # regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
-do_scrape = deque([url])  
+do_scrape = deque([url])
 all_mails = set()
 while(len(do_scrape)):
     url = do_scrape.popleft()
@@ -34,7 +34,7 @@ while(len(do_scrape)):
     all_mails = all_mails | emails
     for link in links :
         do_scrape.append(link)
-# Now we will add the emails to the database 
+# Now we will add the emails to the database
 link = 'http://www.google.com'
 db.main(all_mails)
 send_mail.send_mail(link)
