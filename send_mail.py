@@ -41,7 +41,7 @@ def send_mail(link):
         conn.starttls()
         conn.login(os.environ.get("email_addr") , os.environ.get("email_pass"))
         conn.sendmail(os.environ.get("email_addr") , email[0] ,
-            'Subject: its not too long long long \n\n {}\n\n'.format(link)
+            'Subject: If you got this email means that you still checking your emails Eeh \n\n {}\n\n'.format(link)
         )
 
     conn.quit()
